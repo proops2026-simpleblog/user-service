@@ -13,7 +13,7 @@ email uniqueness, role CHECK constraint, etc.).
     `DATABASE_URL` from `.env` works as-is.
   - When running locally outside Docker, temporarily point `DATABASE_URL` at
     `localhost` instead of the `postgres` hostname, e.g.:
-    `DATABASE_URL=postgres://postgres:DevOps2026@localhost:5432/user_db`
+    `DATABASE_URL=postgres://postgres:<password>@localhost:5432/user_db`
 - `INITIAL_ADMIN_EMAIL` / `INITIAL_ADMIN_PASSWORD` set (already present in
   `.env`).
 
