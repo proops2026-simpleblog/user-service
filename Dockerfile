@@ -3,8 +3,8 @@
 # ---- builder stage: install dependencies only ----
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm install --omit=dev
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
 # ---- runtime stage: slim, non-root, production-only ----
 FROM node:20-alpine AS runtime
