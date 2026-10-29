@@ -49,12 +49,9 @@ jobs:
           --health-timeout 5s
           --health-retries 10
 
-    # Test-only values: they sign tokens for a DB that dies with this job, so they are not secrets.
     env:
       DATABASE_URL: postgres://postgres@localhost:5432/user_db
-      JWT_SECRET: ci-only-not-a-secret
       INITIAL_ADMIN_EMAIL: admin@ci.local
-      INITIAL_ADMIN_PASSWORD: ci-only-Passw0rd
 
     steps:
       - uses: actions/checkout@v7
@@ -62,6 +59,15 @@ jobs:
         with:
           node-version: '20'   # same as Dockerfile node:20-alpine (IRD-006), not the laptop's Node
           cache: 'npm'
+      # No stored secret (DOP-006 AC-6) and no credential-shaped literal in YAML: fresh random
+      # values per run, masked before they reach $GITHUB_ENV so every later log shows ***.
+      - name: Generate per-run test secrets
+        run: |
+          for name in JWT_SECRET INITIAL_ADMIN_PASSWORD; do
+            value=$(openssl rand -hex 24)
+            echo "::add-mask::$value"
+            echo "$name=$value" >> "$GITHUB_ENV"
+          done
       - run: npm ci
       - run: npm run migrate
       - run: npm run test:coverage   # jest --coverage → coverage/lcov.info
