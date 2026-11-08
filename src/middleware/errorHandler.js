@@ -27,6 +27,7 @@ function errorHandler(err, req, res, next) {
   }
 
   // Unexpected error: never leak internals, never log secrets.
+  // eslint-disable-next-line no-console
   console.error('Unhandled error:', err.message);
   return sendError(res, 500, 'Internal Server Error', 'An unexpected error occurred');
 }

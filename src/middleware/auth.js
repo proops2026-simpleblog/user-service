@@ -18,7 +18,7 @@ function requireAuth(req, res, next) {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = payload; // { sub, email, role }
     return next();
-  } catch (err) {
+  } catch {
     return next(new ApiError(401, 'Unauthorized', 'Invalid or expired token'));
   }
 }
