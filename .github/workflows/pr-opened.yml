@@ -1,12 +1,12 @@
 name: PR Open — App CI
 on: { pull_request: { branches: [main], paths-ignore: ['iac/**'] } }
+concurrency: { group: "ci-${{ github.ref }}", cancel-in-progress: true }
 permissions: { contents: read, packages: write }
 jobs:
   ci:
-    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-app-ci.yml@v1.1
+    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-app-ci.yml@feature/dat/platform-v1.2
     with:
       image-name: proops2026-simpleblog/user-service
-      image-tag: ${{ github.sha }}
       push-image: false
       test-script: test:coverage
       db-name: user_db
