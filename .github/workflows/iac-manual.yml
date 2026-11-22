@@ -7,7 +7,7 @@ on:
 permissions: { contents: read, id-token: write }
 jobs:
   iac:
-    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-iac.yml@feat/v1-generic-service-inputs
+    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-iac.yml@v1.1
     with:
       action: ${{ inputs.action }}
       environment: ${{ inputs.environment }}
