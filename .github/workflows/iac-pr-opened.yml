@@ -6,7 +6,7 @@ on:
 permissions: { contents: read, id-token: write }
 jobs:
   ci:
-    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-iac.yml@feature/dat/platform-v1.2
+    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-iac.yml@v1.2
     with:
       action: plan
       environment: dev
