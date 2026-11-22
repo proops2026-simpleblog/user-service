@@ -1,0 +1,17 @@
+name: PR Open — App CI
+on: { pull_request: { branches: [main], paths-ignore: ['iac/**'] } }
+permissions: { contents: read, packages: write }
+jobs:
+  ci:
+    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-app-ci.yml@feat/v1-generic-service-inputs
+    with:
+      image-name: proops2026-simpleblog/user-service
+      image-tag: ${{ github.sha }}
+      push-image: false
+      test-script: test:coverage
+      db-name: user_db
+      test-secrets: JWT_SECRET INITIAL_ADMIN_PASSWORD
+      test-env: INITIAL_ADMIN_EMAIL=admin@ci.local
+      deploy-kind: true
+      service-name: user-service
+      run-sonar: false # SonarCloud project blocked on org permission (Day 26)

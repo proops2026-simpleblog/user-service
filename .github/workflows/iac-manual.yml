@@ -1,0 +1,19 @@
+name: IaC Manual
+on:
+  workflow_dispatch:
+    inputs:
+      action: { type: choice, options: [plan, apply, destroy], default: plan }
+      environment: { type: choice, options: [dev, test, prod], default: dev }
+permissions: { contents: read, id-token: write }
+jobs:
+  iac:
+    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-iac.yml@feat/v1-generic-service-inputs
+    with:
+      action: ${{ inputs.action }}
+      environment: ${{ inputs.environment }}
+      working-directory: iac/${{ inputs.environment }}
+      aws-region: us-east-2
+      aws-role-arn: ${{ vars.AWS_APPLY_ROLE_ARN }}
+      backend-bucket: ${{ vars.TFSTATE_BUCKET }}
+      terraform-version: "~1.16"
+    secrets: inherit # TF_VAR_OWNER, TF_VAR_EMAIL, TF_VAR_RESPONSIBLE_PARTY
