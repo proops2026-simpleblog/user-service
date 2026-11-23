@@ -1,3 +1,4 @@
+// Entry point: load env, build the Express app, run the admin bootstrap, listen.
 require('dotenv').config();
 const createApp = require('./app');
 const db = require('./db');
