@@ -1,0 +1,18 @@
+name: IaC PR Merged — Apply
+on:
+  push:
+    branches: [main]
+    paths: ['iac/**']
+permissions: { contents: read, id-token: write }
+jobs:
+  iac:
+    uses: proops2026-simpleblog/proops2026-cicd-platform/.github/workflows/reusable-iac.yml@v1.2
+    with:
+      action: apply
+      environment: dev
+      working-directory: iac/dev
+      aws-region: us-east-2
+      aws-role-arn: ${{ vars.AWS_APPLY_ROLE_ARN }}
+      backend-bucket: ${{ vars.TFSTATE_BUCKET }}
+      terraform-version: "~1.16"
+    secrets: inherit # TF_VAR_OWNER, TF_VAR_EMAIL, TF_VAR_RESPONSIBLE_PARTY
