@@ -22,6 +22,6 @@ module "api_server" {
 
   # EC2-specific
   purpose          = var.purpose
-  application_role = "EC2 API Server"
+  application_role = "EC2 API Server (user-service)"
   instance_type    = var.instance_type
 }
